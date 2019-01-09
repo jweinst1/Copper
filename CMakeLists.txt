@@ -13,6 +13,7 @@ set(copper_version "${copper_version_major}.${copper_version_minor}.${copper_ver
 # Enables Testing for project #
 enable_testing()
 
+add_subdirectory(utils)
 add_subdirectory(runner)
 
 # Writes build version to receipt file.
