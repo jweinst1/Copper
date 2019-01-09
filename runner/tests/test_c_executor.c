@@ -3,7 +3,9 @@
 
 void test_c_executor_compile_run(void)
 {
-
+	static const char* c_program = ("#include<stdio.h> \n\n int main(int argc, const char * const *argv)"
+	                               "{ puts(\"foo\"); }\n");
+	TEST_FAIL_CHECK(c_executor_compile_run(c_program));
 }
 
 
