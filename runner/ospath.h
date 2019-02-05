@@ -49,6 +49,13 @@ typedef char ospath_char_t;
 #  define ospath_popen popen
 #endif // _WIN32
 
+// fopen defines
+#ifdef WIN32_UTF16_PATHNAMES
+#   define ospath_fopen _wfopen
+#else
+#   define ospath_fopen fopen
+#endif
+
 // Wraps popen calls in appropiate ospath chars.
 // evaluates to a FILE*
 #define ospath_call_popen(cmd, mode) (ospath_popen(OSPATH_CONSTANT(cmd), OSPATH_CONSTANT(mode)))
