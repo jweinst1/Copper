@@ -2,6 +2,7 @@
 #define _UTIL_CSTR_H
 
 #include <cstdlib>
+#include <cstring>
 
 /*
  * String class that uses malloc/rellaoc/free for memory management.
@@ -17,9 +18,25 @@ public:
 	CStr(const CStr& other);
 	virtual ~CStr();
 
+	CStr& operator=(const CStr& other);
+
 	size_t getLen() const { return _len; }
 	size_t getCap() const { return _cap; }
+	size_t getSpace() const { return _cap - _len; }
 	const char* getStr() const { return _str; }
+	/**
+	 * up to _cap, rewrites the contents of _str.
+	 * if string is smaller than cap, remaining
+	 * space is padded with null chars.
+	 */
+	void rewrite(const char* string);
+private:
+	/**
+	 * Changes the capacity of the string using std::realloc.
+	 * if newSize is less than current length, it will trim
+	 * the encapsulated string.
+	 */
+	void changeSize(size_t newSize);
 private:
 	size_t _cap;
 	size_t _len;

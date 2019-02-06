@@ -1,13 +1,19 @@
-#include <cstring>
+#include <cassert>
 #include "CStr.h"
 
-#ifndef MSTR_DEFAULT_CAP
-#define MSTR_DEFAULT_CAP 60
+#ifndef CSTR_DEFAULT_CAP
+#define CSTR_DEFAULT_CAP 60
 #endif
 
-CStr::CStr(): _cap(MSTR_DEFAULT_CAP),
+#ifndef CSTR_DEFAULT_PAD_CAP
+#define CSTR_DEFAULT_PAD_CAP 10
+#endif
+
+#define _CHAR_CAST(mem) static_cast<char*>(mem)
+
+CStr::CStr(): _cap(CSTR_DEFAULT_CAP),
               _len(0),
-              _str(static_cast<char*>(std::malloc(_cap + 1))) /* + 1 for null char*/
+              _str(_CHAR_CAST(std::malloc(_cap + 1))) /* + 1 for null char*/
 {
 	std::memset(_str, 0, _cap + 1);
 }
@@ -15,16 +21,42 @@ CStr::CStr(): _cap(MSTR_DEFAULT_CAP),
 CStr::CStr(const char* string)
 {
 	_len = std::strlen(string);
-	_cap = _len + MSTR_DEFAULT_CAP;
+	_cap = _len + CSTR_DEFAULT_CAP;
 	_str = static_cast<char*>(std::malloc(_cap + 1));
 	std::strncpy(_str, string, _cap + 1);
 }
 
 CStr::CStr(const CStr& other): _cap(other.getCap()),
                                _len(other.getLen()),
-                               _str(static_cast<char*>(std::malloc(_cap + 1)))
+                               _str(_CHAR_CAST(std::malloc(_cap + 1)))
 {
 	std::strncpy(_str, other.getStr(), _cap + 1);
+}
+
+void CStr::changeSize(size_t newSize)
+{
+	_cap = newSize;
+	_str = _CHAR_CAST(std::realloc(_str, _cap + 1));
+	_len = (_len < _cap) ? _cap : _len;
+}
+
+void CStr::rewrite(const char* string)
+{
+	_len = 0;
+	while(*string && _len < _cap) {
+		_str[_len++] = *string++;
+	}
+}
+
+CStr& CStr::operator=(const CStr& other)
+{
+	if(this != &other) {
+		// check if internal string has enough space
+		if(_cap < other.getLen())
+			changeSize(other.getCap() + CSTR_DEFAULT_PAD_CAP);
+		rewrite(other.getStr());
+	}
+	return *this;
 }
 
 CStr::~CStr()
