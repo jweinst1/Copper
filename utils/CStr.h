@@ -32,6 +32,12 @@ public:
 	void rewrite(const char* string);
 private:
 	/**
+	 * This is a method not meant to be called directly.
+	 * it allows a C - string to be written into the CStr object,
+	 * but will continously expand if not enough capacity is present.
+	 */
+	void rewriteAndExpand(const char* string);
+	/**
 	 * Changes the capacity of the string using std::realloc.
 	 * if newSize is less than current length, it will trim
 	 * the encapsulated string.

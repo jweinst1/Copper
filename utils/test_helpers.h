@@ -9,7 +9,15 @@
  * only tests.
  */
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 extern const char* 
 test_help_find_substr(const char* string, const char* substring);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif // TEST_HELPERS_H

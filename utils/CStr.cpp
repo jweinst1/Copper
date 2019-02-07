@@ -48,6 +48,16 @@ void CStr::rewrite(const char* string)
 	}
 }
 
+void CStr::rewriteAndExpand(const char* string)
+{
+	_len = 0;
+	while(*string) {
+		if(_len == _cap)
+			changeSize(_cap * 2);
+		_str[_len++] = *string++;
+	}
+}
+
 CStr& CStr::operator=(const CStr& other)
 {
 	if(this != &other) {
