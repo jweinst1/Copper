@@ -14,12 +14,22 @@ class CStr
 {
 public:
 	CStr();
-	explicit CStr(const char* string);
+	CStr(const char* string);
 	CStr(const CStr& other);
 	virtual ~CStr();
 
 	CStr& operator=(const CStr& other);
 	CStr& operator=(const char* string);
+	/**
+	 * This method is a safe access, if the index is more than length,
+	 * it will return the null char. Since a null char is normally
+	 * not counted as part of a string, getting '\0' from this method
+	 * is meant to be an error.
+	 */
+	char operator[](size_t index) const
+	{
+		return (index < _len) ? _str[index] : '\0';
+	}
 
 	size_t getLen() const { return _len; }
 	size_t getCap() const { return _cap; }
@@ -31,6 +41,8 @@ public:
 	 * space is padded with null chars.
 	 */
 	void rewrite(const char* string);
+
+	void reserve(size_t size);
 private:
 	/**
 	 * This is a method not meant to be called directly.

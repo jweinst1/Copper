@@ -58,6 +58,12 @@ void CStr::rewriteAndExpand(const char* string)
 	}
 }
 
+void CStr::reserve(size_t size)
+{
+	_cap += size;
+	_str = _CHAR_CAST(std::realloc(_str, _cap + 1));
+}
+
 CStr& CStr::operator=(const CStr& other)
 {
 	if(this != &other) {
