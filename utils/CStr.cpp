@@ -69,6 +69,12 @@ CStr& CStr::operator=(const CStr& other)
 	return *this;
 }
 
+CStr& CStr::operator=(const char* string)
+{
+	rewriteAndExpand(string);
+	return *this;
+}
+
 CStr::~CStr()
 {
 		std::free(_str);

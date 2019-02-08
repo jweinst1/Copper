@@ -7,3 +7,5 @@ add_library(test_helpers test_helpers.c)
 add_library(copper_utils
       CStr.cpp
 )
+
+add_subdirectory(tests)

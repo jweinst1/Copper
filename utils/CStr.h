@@ -19,6 +19,7 @@ public:
 	virtual ~CStr();
 
 	CStr& operator=(const CStr& other);
+	CStr& operator=(const char* string);
 
 	size_t getLen() const { return _len; }
 	size_t getCap() const { return _cap; }
