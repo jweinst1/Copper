@@ -35,6 +35,16 @@ public:
 	size_t getCap() const { return _cap; }
 	size_t getSpace() const { return _cap - _len; }
 	const char* getStr() const { return _str; }
+
+	bool operator==(const CStr& other) const
+	{
+		return _len == other.getLen() ? (std::strcmp(_str, other.getStr()) == 0) : false;
+	}
+
+	bool operator!=(const CStr& other) const
+	{
+		return !(*this == other);
+	}
 	/**
 	 * up to _cap, rewrites the contents of _str.
 	 * if string is smaller than cap, remaining
