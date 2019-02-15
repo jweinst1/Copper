@@ -14,7 +14,6 @@ set(copper_version "${copper_version_major}.${copper_version_minor}.${copper_ver
 enable_testing()
 
 add_subdirectory(utils)
-add_subdirectory(runner)
 
 # Writes build version to receipt file.
 file(WRITE ${PROJECT_SOURCE_DIR}/bin/build_receipt.txt "copper Build\n\nVersion ${copper_version}\n")
